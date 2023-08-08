@@ -1,15 +1,39 @@
 import tw from 'tailwind-styled-components';
 import Movies from './Components/Movies';
 import Search from './Components/Search';
+import {useEffect, useState} from 'react';
 
 function App() {
+	const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(false);
+
+	const url = 'http://www.omdbapi.com?apikey=2d86c6da';
+	const fetchData = async (search) => {
+		setLoading(true);
+		try {
+			const response = await fetch(`${url}&s=${search}`);
+			const result = await response.json();
+			setData(result.Search);
+			setLoading(false);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	useEffect(() => {
+		fetchData('Creed');
+	}, []);
+
 	return (
-		<div className='flex flex-col items-center justify-center gap-24 pt-10'>
-			<div className='flex flex-col items-center justify-center gap-2'>
+		<div className='flex flex-col items-center justify-center gap-24 py-10'>
+			<div className='flex flex-col items-center justify-center gap-3'>
 				<Brand>Mvee</Brand>
 				<Search />
 			</div>
-			<Movies />
+			{loading ? (
+				<div className='w-12 h-12 rounded-full border-2 border-yellow-500 animate-pulse'></div>
+			) : (
+				<Movies data={data} />
+			)}
 		</div>
 	);
 }
