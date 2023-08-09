@@ -1,10 +1,23 @@
+import {useRef, useState} from 'react';
 import {BsSearch} from 'react-icons/bs';
 
-const Search = () => {
+const Search = ({searchInput}) => {
+	// const searchRef = useRef(null);
+	const [input, setInput] = useState();
+
+	const searchHandler = (e) => {
+		e.preventDefault();
+		searchInput(input);
+	};
+
 	return (
-		<form className='w-[15rem] xs:w-[17rem] sm:w-[31rem] md:w-[44rem]'>
+		<form
+			onSubmit={searchHandler}
+			className='w-[15rem] xs:w-[17rem] sm:w-[31rem] md:w-[44rem]'>
 			<div className='flex relative'>
 				<input
+					value={input}
+					onChange={(e) => setInput(e.target.value)}
 					type='search'
 					placeholder='Search...'
 					className='peer/search w-full border border-gray-300 rounded-md py-2 pl-5 pr-10 text-lg outline-none focus:border-yellow-500 hover:shadow-lg focus:shadow-xl transition'

@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 
 function App() {
 	const [data, setData] = useState([]);
+	const [search, setSearch] = useState('Creed');
 	const [loading, setLoading] = useState(false);
 
 	const url = 'http://www.omdbapi.com?apikey=2d86c6da';
@@ -19,15 +20,16 @@ function App() {
 			console.log(error);
 		}
 	};
+
 	useEffect(() => {
-		fetchData('Creed');
-	}, []);
+		fetchData(search);
+	}, [search]);
 
 	return (
 		<div className='flex flex-col items-center justify-center gap-24 py-10'>
 			<div className='flex flex-col items-center justify-center gap-3'>
 				<Brand>Mvee</Brand>
-				<Search />
+				<Search searchInput={setSearch} />
 			</div>
 			{loading ? (
 				<div className='w-12 h-12 rounded-full border-2 border-yellow-500 animate-pulse'></div>
