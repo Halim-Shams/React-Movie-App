@@ -8,7 +8,7 @@ function App() {
 	const [search, setSearch] = useState('Creed');
 	const [loading, setLoading] = useState(false);
 
-	const url = `http://www.omdbapi.com?apikey=${import.meta.env.VITE_API}`;
+	const url = `https://www.omdbapi.com?apikey=${import.meta.env.VITE_API}`;
 	const fetchData = async (search) => {
 		setLoading(true);
 		try {
