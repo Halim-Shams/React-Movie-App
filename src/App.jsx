@@ -1,13 +1,14 @@
 import tw from 'tailwind-styled-components';
 import Movies from './Components/Movies';
 import Search from './Components/Search';
-import {useEffect, useState} from 'react';
-
+import { useEffect, useState } from 'react';
+import DarkModeToggle from "./Components/DarkModeToogle"
 function App() {
 	const [data, setData] = useState([]);
 	const [search, setSearch] = useState('Creed');
 	const [loading, setLoading] = useState(false);
-
+	const [isDarkMode, setIsDarkMode] = useState(false);
+  
 	const url = `https://www.omdbapi.com?apikey=${import.meta.env.VITE_API}`;
 	const fetchData = async (search) => {
 		setLoading(true);
@@ -26,10 +27,14 @@ function App() {
 	}, [search]);
 
 	return (
-		<div className='flex flex-col items-center justify-center gap-24 py-10'>
+		<div className={`flex flex-col items-center justify-center gap-24 py-10 transition-colors ${isDarkMode ? 'bg-gray-900' : 'bg-white-900' }`}>
 			<div className='flex flex-col items-center justify-center gap-3'>
 				<Brand>Mvee</Brand>
-				<Search searchInput={setSearch} />
+				<div className='flex flex-row gap-6 items-center'>
+					<Search searchInput={setSearch} />
+					<DarkModeToggle onToggle={setIsDarkMode} />
+				</div>
+
 			</div>
 			{loading ? (
 				<div className='w-12 h-12 rounded-full border-2 border-yellow-500 animate-pulse'></div>
@@ -51,5 +56,8 @@ to-yellow-200/30
 text-5xl
 sm:text-6xl
 `;
+
+
+
 
 export default App;
